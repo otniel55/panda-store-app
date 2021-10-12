@@ -30,7 +30,7 @@ export class BillingPage implements OnInit {
 
     await asyncForeach(async (key) => {
       const order = await this.storage.get(key);
-      if (order.state === 'PD') {
+      if (order.state === 'FC') {
         this.orders.push(order);
       }
     }, keys);

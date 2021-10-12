@@ -12,16 +12,13 @@ export class HomePage implements OnInit {
   customers: any[] = [];
   receiveds: any[] = [];
   orders: any[] = [];
+  billeds: any[] = [];
 
   constructor(private storage: StorageService) {}
 
   ngOnInit() {}
 
   async ionViewWillEnter() {
-    this.init();
-  }
-
-  async init() {
     await sleep(200);
     const keys = await this.storage.keys();
     this.customers = [];
@@ -43,16 +40,33 @@ export class HomePage implements OnInit {
     this.setLists();
   }
 
-  async deliver(order) {
+  async markLikeDelivered(order) {
     order.state = 'ET';
     await this.storage.set(order.id, order);
     this.customers = this.customers.filter((item) => item.id !== order.id);
     this.setLists();
   }
 
+  async markLikeBilled(order) {
+    order.state = 'FC';
+    await this.storage.set(order.id, order);
+    const curentOrder = this.customers.find((item) => item.id === order.id);
+    curentOrder.state = 'FC';
+    this.setLists();
+  }
+
+  async markLikePending(order) {
+    order.state = 'PD';
+    await this.storage.set(order.id, order);
+    const curentOrder = this.customers.find((item) => item.id === order.id);
+    curentOrder.state = 'PD';
+    this.setLists();
+  }
+
   setLists() {
     this.orders = this.customers.filter((item) => item.state === 'PD');
     this.receiveds = this.customers.filter((item) => item.state === 'RB');
+    this.billeds = this.customers.filter((item) => item.state === 'FC');
   }
 
   openWs(e, phone: string) {
