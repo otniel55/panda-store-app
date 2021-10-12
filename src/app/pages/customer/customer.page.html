@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>PEDIDO</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" class="customer-form">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input clearInput formControlName="name" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ubicación</ion-label>
+      <ion-input clearInput formControlName="location"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input clearInput formControlName="phone" type="tel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Modelo</ion-label>
+      <ion-input clearInput formControlName="model" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Talla</ion-label>
+      <ion-input clearInput formControlName="size" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Precio C.</ion-label>
+      <ion-input
+        clearInput
+        formControlName="buyedPrice"
+        type="number"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Precio V.</ion-label>
+      <ion-input
+        clearInput
+        formControlName="soldPrise"
+        type="number"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Abono</ion-label>
+      <ion-input
+        clearInput
+        formControlName="abono"
+        type="number"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Observaciones</ion-label>
+      <ion-textarea
+        clearInput
+        formControlName="observations"
+        autoGrow="true"
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-button class="btn-save" expand="block" (click)="save()"
+      >GUARDAR</ion-button
+    >
+  </form>
+</ion-content>

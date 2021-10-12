@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar class="test">
+    <ion-title>FACTURACIÓN</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="billing-container">
+    <ion-list *ngIf="!orders.length; else ordersContainer">
+      <ion-item lines="none">
+        <ion-label>
+          <h2 style="text-align: center">NO HAY REGISTROS PARA FACTURAR</h2>
+          <p class="no-items-icon">
+            <ion-icon slot="start" name="cube-outline"></ion-icon>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #ordersContainer>
+      <ion-list>
+        <ion-item-divider>
+          <ion-label> PEDIDOS A CANCELAR </ion-label>
+        </ion-item-divider>
+
+        <ion-item-sliding *ngFor="let item of orders; trackBy: trackByFunc">
+          <ion-item>
+            <ion-label>
+              <h2>{{item.name | uppercase}}</h2>
+              <h3>Fec. Pedido: {{ item.date | date:'dd/MM hh:mm a'}}</h3>
+              <p>
+                {{ item.model }} - {{ item.size }} - {{ item.observations }}
+              </p>
+            </ion-label>
+
+            <ion-label slot="end"
+              ><h2>{{ item.buyedPrice | currency:'$' }}</h2></ion-label
+            >
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="delete(item.id)"
+              >ELIMINAR</ion-item-option
+            >
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <ion-item>
+          <ion-label><h2>TOTAL A PAGAR</h2></ion-label>
+          <ion-label slot="end"><h2>{{ total | currency:'$' }}</h2></ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-button class="btn-save" expand="block" (click)="save()"
+        >RECIBIR</ion-button
+      >
+    </ng-template>
+  </div>
+</ion-content>

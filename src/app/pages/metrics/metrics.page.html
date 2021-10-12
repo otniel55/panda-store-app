@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar class="test">
+    <ion-title>GANANCIAS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="metrics-container">
+    <ion-list *ngIf="!orders.length; else ordersContainer">
+      <ion-item lines="none">
+        <ion-label
+          ><h2 style="text-align: center">NO HAY VENTAS EN LA SEMANA</h2>
+          <p class="no-sold-icon">
+            <ion-icon slot="start" name="sad-outline"></ion-icon>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #ordersContainer>
+      <ion-list>
+        <ng-container *ngFor="let item of history; trackBy: trackByFunc">
+          <ion-item-divider>
+            <ion-label>
+              {{ item.date | date:'MMMM yyyy' | uppercase }}
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-item>
+            <ion-label><h2>CONJUNTOS VENDIDOS</h2></ion-label>
+            <ion-label slot="end"
+              ><h2>{{ item.totalItems | number }}</h2></ion-label
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label><h2>MONTO INVERTIDO</h2></ion-label>
+            <ion-label slot="end"
+              ><h2>{{ item.totalPayed | currency:'$' }}</h2></ion-label
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label><h2>GANANCIAS</h2></ion-label>
+            <ion-label slot="end"
+              ><h2>{{ item.totalWinned | currency:'$' }}</h2></ion-label
+            >
+          </ion-item>
+        </ng-container>
+      </ion-list>
+    </ng-template>
+  </div>
+</ion-content>
