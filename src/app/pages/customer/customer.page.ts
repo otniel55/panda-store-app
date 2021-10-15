@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StorageService } from 'src/app/services/storage.service';
-import { uuidv4 } from 'src/app/shared/utils/get-uuid';
 import { ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, tap } from 'rxjs/operators';
-import { sleep } from 'src/app/shared/utils/sleep';
 import * as moment from 'moment';
+
+import { StorageService } from 'src/app/services/storage.service';
+import { uuidv4 } from 'src/app/shared/utils/get-uuid';
+import { sleep } from 'src/app/shared/utils/sleep';
+import { Order } from 'src/app/shared/models/order';
+import { FilesystemService } from 'src/app/services/filesystem.service';
 
 @Component({
   selector: 'app-customer',
@@ -16,14 +19,15 @@ import * as moment from 'moment';
 export class CustomerPage implements OnInit {
   form: FormGroup;
   id: string;
-  order: any;
+  order: Order;
 
   constructor(
     private fb: FormBuilder,
     private storage: StorageService,
     public toastController: ToastController,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private fs: FilesystemService
   ) {}
 
   ngOnInit() {
@@ -46,8 +50,8 @@ export class CustomerPage implements OnInit {
     this.route.params
       .pipe(
         map((params) => params.id),
-        tap((id) => (this.id = id)),
-        filter((id) => id)
+        filter((id) => id),
+        tap((id) => (this.id = id))
       )
       .subscribe(async (id) => {
         await sleep();
@@ -87,5 +91,9 @@ export class CustomerPage implements OnInit {
 
     await sleep(200);
     this.router.navigate(['/home']);
+  }
+
+  async openChooser() {
+    console.log(await this.fs.openFile());
   }
 }

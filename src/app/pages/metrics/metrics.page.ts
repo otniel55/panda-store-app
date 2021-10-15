@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+
 import { StorageService } from 'src/app/services/storage.service';
 import { arraySum, asyncForeach } from 'src/app/shared/utils/arr';
 import { sleep } from 'src/app/shared/utils/sleep';
-import * as moment from 'moment';
+import { Order } from 'src/app/shared/models/order';
+import { MetricHistory } from 'src/app/shared/models/metric-history';
 
 @Component({
   selector: 'app-metrics',
@@ -10,11 +13,8 @@ import * as moment from 'moment';
   styleUrls: ['./metrics.page.scss'],
 })
 export class MetricsPage implements OnInit {
-  orders: any[] = [];
-  totalItems = 0;
-  totalPayed = 0;
-  totalWinned = 0;
-  history: any[] = [];
+  orders: Order[] = [];
+  history: MetricHistory[] = [];
 
   constructor(private storage: StorageService) {}
 

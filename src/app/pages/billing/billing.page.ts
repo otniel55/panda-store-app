@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import * as moment from 'moment';
+
+import { sleep } from 'src/app/shared/utils/sleep';
 import { StorageService } from 'src/app/services/storage.service';
 import { arraySum, asyncForeach } from 'src/app/shared/utils/arr';
-import { sleep } from 'src/app/shared/utils/sleep';
-import * as moment from 'moment';
-import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Order } from './../../shared/models/order';
 
 @Component({
   selector: 'app-billing',
@@ -12,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./billing.page.scss'],
 })
 export class BillingPage implements OnInit {
-  orders: any[] = [];
+  orders: Order[] = [];
   total = 0;
 
   constructor(

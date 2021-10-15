@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { StorageService } from 'src/app/services/storage.service';
+import { Order } from 'src/app/shared/models/order';
 import { asyncForeach } from 'src/app/shared/utils/arr';
 import { sleep } from 'src/app/shared/utils/sleep';
 
@@ -9,10 +11,10 @@ import { sleep } from 'src/app/shared/utils/sleep';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  customers: any[] = [];
-  receiveds: any[] = [];
-  orders: any[] = [];
-  billeds: any[] = [];
+  customers: Order[] = [];
+  receiveds: Order[] = [];
+  orders: Order[] = [];
+  billeds: Order[] = [];
 
   constructor(private storage: StorageService) {}
 
@@ -72,6 +74,6 @@ export class HomePage implements OnInit {
   openWs(e, phone: string) {
     e.stopPropagation();
     e.preventDefault();
-    window.open(`whatsapp://send?phone=${phone}`);
+    window.open(`whatsapp://send?phone=58${phone}`);
   }
 }
