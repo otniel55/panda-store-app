@@ -1,12 +1,34 @@
 <ion-header>
   <ion-toolbar class="test">
     <ion-title>FACTURACIÓN</ion-title>
+
+    <ion-button
+      *ngIf="orders.length"
+      fill="fab"
+      shape="round"
+      slot="end"
+      class="btn-check"
+      (click)="refresh()"
+    >
+      <ion-icon name="refresh"></ion-icon>
+    </ion-button>
+
+    <ion-button
+      *ngIf="billedOrders.length"
+      fill="fab"
+      shape="round"
+      slot="end"
+      class="btn-check"
+      (click)="save()"
+    >
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="billing-container">
-    <ion-list *ngIf="!orders.length; else ordersContainer">
+    <ion-list *ngIf="!billedOrders.length; else ordersContainer">
       <ion-item lines="none">
         <ion-label>
           <h2 style="text-align: center">NO HAY REGISTROS PARA FACTURAR</h2>
@@ -24,9 +46,11 @@
         </ion-item-divider>
 
         <ion-item
-          *ngFor="let item of orders; trackBy: trackByFunc"
-          (press)="presentActionSheet()"
+          class="ion-activatable ripple-parent"
+          *ngFor="let item of billedOrders; trackBy: trackByFunc"
+          (press)="presentActionSheet(item)"
         >
+          <ion-ripple-effect></ion-ripple-effect>
           <ion-label>
             <h2>{{item.name | uppercase}}</h2>
             <h3>Fec. Pedido: {{ item.date | date:'dd/MM hh:mm a'}}</h3>
@@ -43,10 +67,6 @@
           <ion-label slot="end"><h2>{{ total | currency:'$' }}</h2></ion-label>
         </ion-item>
       </ion-list>
-
-      <ion-button class="btn-save" expand="block" (click)="save()"
-        >RECIBIR</ion-button
-      >
     </ng-template>
   </div>
 </ion-content>

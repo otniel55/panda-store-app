@@ -10,38 +10,26 @@
       <ion-label> POR ENTREGAR </ion-label>
     </ion-item-divider>
 
-    <ion-item-sliding *ngFor="let item of orders; trackBy: trackByFunc">
-      <ion-item [routerLink]="['/customer', item.id]">
-        <ion-avatar slot="start">
-          <img src="/assets/panda-circle.png" />
-        </ion-avatar>
+    <ion-item
+      class="ion-activatable ripple-parent"
+      *ngFor="let item of orders; trackBy: trackByFunc"
+      (press)="presentActionSheet(item)"
+    >
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-avatar slot="start">
+        <img src="/assets/panda-circle.png" />
+      </ion-avatar>
 
-        <ion-label>
-          <h2>{{item.name | uppercase}}</h2>
-          <h3>Monto: {{ item.soldPrise | currency:'$' }}</h3>
-          <h3>Abono: {{ item.abono | currency:'$' }}</h3>
-          <h3>Resta: {{ item.soldPrise - item.abono | currency:'$' }}</h3>
-          <h3>Fec. Pedido: {{ item.date | date:'dd/MM hh:mm a' }}</h3>
-          <h3>
-            Fec. Recibido: {{ item.deliveredDate | date:'dd/MM hh:mm a' }}
-          </h3>
-          <p>{{ item.model }} - {{ item.size }} - {{ item.observations }}</p>
-        </ion-label>
-
-        <ion-button fill="fab" slot="end" (click)="openWs($event, item.phone)">
-          <ion-icon slot="start" name="logo-whatsapp"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="markLikeBilled(item)"
-          >DESHACER</ion-item-option
-        >
-        <ion-item-option color="success" (click)="markLikeDelivered(item)"
-          >ENTREGAR</ion-item-option
-        >
-      </ion-item-options>
-    </ion-item-sliding>
+      <ion-label>
+        <h2>{{item.name | uppercase}}</h2>
+        <h3>Monto: {{ item.soldPrise | currency:'$' }}</h3>
+        <h3>Abono: {{ item.abono | currency:'$' }}</h3>
+        <h3>Resta: {{ item.soldPrise - item.abono | currency:'$' }}</h3>
+        <h3>Fec. Pedido: {{ item.date | date:'dd/MM hh:mm a' }}</h3>
+        <h3>Fec. Recibido: {{ item.deliveredDate | date:'dd/MM hh:mm a' }}</h3>
+        <p>{{ item.model }} - {{ item.size }} - {{ item.observations }}</p>
+      </ion-label>
+    </ion-item>
 
     <ion-item *ngIf="!orders.length" lines="none">
       <ion-label><p>NO SE ENCONTRARON REGISTROS</p></ion-label>

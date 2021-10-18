@@ -38,3 +38,8 @@ ion-button.button.button-solid {
 .tab-selected {
   --color-selected: #ef3091;
 }
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}

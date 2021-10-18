@@ -10,11 +10,15 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public appPages = [
+  tabs = [
     { title: 'Pedidos', url: 'orders', icon: 'bag-check' },
     { title: 'Facturados', url: 'billing', icon: 'cash' },
     { title: 'Recibidos', url: 'received', icon: 'archive-outline' },
     { title: 'Ganancia', url: 'metrics', icon: 'pie-chart' },
+  ];
+  menus = [
+    { title: 'Clientes', url: 'clients', icon: 'people' },
+    { title: 'Acerca de', url: 'about', icon: 'information-circle-outline' },
   ];
 
   constructor(

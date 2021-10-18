@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ActionSheetController } from '@ionic/angular';
 
 import { StorageService } from 'src/app/services/storage.service';
 import { Order } from 'src/app/shared/models/order';
 import { asyncForeach } from 'src/app/shared/utils/arr';
+import { sendWhatsapp } from 'src/app/shared/utils/send-ws';
 import { sleep } from 'src/app/shared/utils/sleep';
 
 @Component({
@@ -13,7 +16,11 @@ import { sleep } from 'src/app/shared/utils/sleep';
 export class OrdersPage implements OnInit {
   orders: Order[] = [];
 
-  constructor(private storage: StorageService) {}
+  constructor(
+    private storage: StorageService,
+    public actionSheetController: ActionSheetController,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -46,9 +53,42 @@ export class OrdersPage implements OnInit {
     this.orders = this.orders.filter((item) => item.state === 'PD');
   }
 
-  openWs(e, phone: string) {
-    e.stopPropagation();
-    e.preventDefault();
-    window.open(`whatsapp://send?phone=58${phone}`);
+  async presentActionSheet(order: Order) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Más opciones',
+      buttons: [
+        {
+          text: 'Enviar whatsapp',
+          icon: 'logo-whatsapp',
+          handler: async () => {
+            sendWhatsapp({ phone: order.phone, msg: '' });
+          },
+        },
+        {
+          text: 'Editar',
+          icon: 'create',
+          handler: async () => {
+            this.router.navigate(['customer', order.id]);
+          },
+        },
+        {
+          text: 'Marcar como facturado',
+          icon: 'cash',
+          handler: async () => {
+            await this.markLikeBilled(order);
+          },
+        },
+        {
+          text: 'Eliminar',
+          icon: 'trash',
+          handler: async () => {
+            await this.delete(order.id);
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+    await actionSheet.onDidDismiss();
   }
 }

@@ -36,6 +36,10 @@ const routes: Routes = [
         (m) => m.ReceivedPageModule
       ),
   },
+  {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
+  },
 ];
 
 @NgModule({

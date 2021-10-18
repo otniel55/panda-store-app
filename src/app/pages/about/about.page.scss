@@ -1,0 +1,25 @@
+.main-container {
+  padding: 10px;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+}
+
+.info {
+  color: #6c6c6c;
+  text-align: center;
+}
+
+.frameworks-icons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  & > img {
+    max-width: 50px;
+    max-height: 80px;
+    margin: 0 10px;
+  }
+}

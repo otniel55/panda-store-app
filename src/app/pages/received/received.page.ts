@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
 
 import { StorageService } from 'src/app/services/storage.service';
 import { Order } from 'src/app/shared/models/order';
 import { asyncForeach } from 'src/app/shared/utils/arr';
+import { sendWhatsapp } from 'src/app/shared/utils/send-ws';
 import { sleep } from 'src/app/shared/utils/sleep';
 
 @Component({
@@ -13,7 +15,10 @@ import { sleep } from 'src/app/shared/utils/sleep';
 export class ReceivedPage implements OnInit {
   orders: Order[] = [];
 
-  constructor(private storage: StorageService) {}
+  constructor(
+    private storage: StorageService,
+    public actionSheetController: ActionSheetController
+  ) {}
 
   ngOnInit() {}
 
@@ -47,9 +52,34 @@ export class ReceivedPage implements OnInit {
     this.orders = this.orders.filter((item) => item.state === 'RB');
   }
 
-  openWs(e, phone: string) {
-    e.stopPropagation();
-    e.preventDefault();
-    window.open(`whatsapp://send?phone=58${phone}`);
+  async presentActionSheet(order: Order) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Más opciones',
+      buttons: [
+        {
+          text: 'Enviar whatsapp',
+          icon: 'logo-whatsapp',
+          handler: async () => {
+            sendWhatsapp({ phone: order.phone });
+          },
+        },
+        {
+          text: 'Marcar como entregado',
+          icon: 'checkmark-circle-outline',
+          handler: async () => {
+            await this.markLikeDelivered(order);
+          },
+        },
+        {
+          text: 'Marcar como facturado',
+          icon: 'cash',
+          handler: async () => {
+            await this.markLikeBilled(order);
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+    await actionSheet.onDidDismiss();
   }
 }
