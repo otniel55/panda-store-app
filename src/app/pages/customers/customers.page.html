@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>CLIENTES</ion-title>
+
+    <ion-button
+      fill="fab"
+      shape="round"
+      slot="end"
+      class="btn-add"
+      [routerLink]="['/customer-form']"
+    >
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!-- <ion-item-divider>
+      <ion-label> POR FACTURAR </ion-label>
+    </ion-item-divider> -->
+
+    <ion-item
+      class="ion-activatable ripple-parent"
+      *ngFor="let item of customers; trackBy: trackByFunc"
+      (press)="presentActionSheet(item)"
+    >
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-avatar slot="start">
+        <img
+          [src]="'/assets/' + (item.sexo === 'F' ? 'woman' : 'man') + '.png'"
+        />
+      </ion-avatar>
+
+      <ion-label>
+        <h2>{{item.name + ' ' + item.lastname | uppercase}}</h2>
+        <h2>F. registro: {{item.date | date:'dd/MM/yyyy'}}</h2>
+        <h2>Dirección: {{ item.location }}</h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="!customers.length" lines="none">
+      <ion-label><p>NO SE ENCONTRARON REGISTROS</p></ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

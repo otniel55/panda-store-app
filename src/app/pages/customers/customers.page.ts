@@ -2,22 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 
-import { OrderService } from 'src/app/services/order.service';
-import { Order } from 'src/app/shared/models/order';
+import { Customer } from 'src/app/shared/models/customer';
 import { asyncForeach } from 'src/app/shared/utils/arr';
 import { sendWhatsapp } from 'src/app/shared/utils/send-ws';
 import { sleep } from 'src/app/shared/utils/sleep';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.page.html',
-  styleUrls: ['./orders.page.scss'],
+  selector: 'app-customers',
+  templateUrl: './customers.page.html',
+  styleUrls: ['./customers.page.scss'],
 })
-export class OrdersPage implements OnInit {
-  orders: Order[] = [];
+export class CustomersPage implements OnInit {
+  customers: Customer[] = [];
 
   constructor(
-    private storage: OrderService,
+    private storage: CustomerService,
     public actionSheetController: ActionSheetController,
     private router: Router
   ) {}
@@ -27,14 +27,10 @@ export class OrdersPage implements OnInit {
   async ionViewWillEnter() {
     await sleep(200);
     const keys = await this.storage.keys();
-    this.orders = [];
+    this.customers = [];
 
     await asyncForeach(async (key) => {
-      const order = await this.storage.get(key);
-
-      if (order.state === 'PD') {
-        this.orders.push(order);
-      }
+      this.customers.push(await this.storage.get(key));
     }, keys);
   }
 
@@ -42,18 +38,7 @@ export class OrdersPage implements OnInit {
     return item ? item.id : index;
   }
 
-  async delete(id: string) {
-    await this.storage.delete(id);
-    this.orders = this.orders.filter((item) => item.id !== id);
-  }
-
-  async markLikeBilled(order) {
-    order.state = 'FC';
-    await this.storage.set(order.id, order);
-    this.orders = this.orders.filter((item) => item.state === 'PD');
-  }
-
-  async presentActionSheet(order: Order) {
+  async presentActionSheet(customer: Customer) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Más opciones',
       buttons: [
@@ -61,28 +46,35 @@ export class OrdersPage implements OnInit {
           text: 'Enviar whatsapp',
           icon: 'logo-whatsapp',
           handler: async () => {
-            sendWhatsapp({ phone: order.phone, msg: '' });
+            sendWhatsapp({ phone: customer.phone, msg: '' });
+          },
+        },
+        {
+          text: 'Llamar',
+          icon: 'call-outline',
+          handler: async () => {
+            sendWhatsapp({ phone: customer.phone, msg: '' });
           },
         },
         {
           text: 'Editar',
           icon: 'create',
           handler: async () => {
-            this.router.navigate(['/order-detail', order.id]);
+            this.router.navigate(['/order-detail', customer.id]);
           },
         },
         {
-          text: 'Marcar como facturado',
-          icon: 'cash',
+          text: 'Ir al detalle',
+          icon: 'file-tray-full-outline',
           handler: async () => {
-            await this.markLikeBilled(order);
+            // await this.markLikeBilled(order);
           },
         },
         {
           text: 'Eliminar',
           icon: 'trash',
           handler: async () => {
-            await this.delete(order.id);
+            // await this.delete(order.id);
           },
         },
       ],

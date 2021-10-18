@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { Injectable, LOCALE_ID, NgModule } from '@angular/core';
 import {
   BrowserModule,
   HammerGestureConfig,
@@ -26,6 +26,7 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 
 import * as Hammer from 'hammerjs';
 
+@Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = {
     swipe: { direction: Hammer.DIRECTION_ALL },

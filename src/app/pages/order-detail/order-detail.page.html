@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title>PEDIDO</ion-title>
+    <ion-title>{{ !id ? 'NUEVO' : 'EDITAR'}} PEDIDO</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -74,10 +74,10 @@
       ></ion-textarea>
     </ion-item>
 
-    <ion-button class="btn-save" expand="block" (click)="openChooser()"
+    <!-- <ion-button class="btn-save" expand="block" (click)="openChooser()"
       >SUBIR ARCHIVO <ion-icon slot="end" name="attach"></ion-icon
     ></ion-button>
-    <p>{{test}}</p>
+    <p>{{test}}</p> -->
 
     <ion-button class="btn-save" expand="block" (click)="save()"
       >GUARDAR</ion-button

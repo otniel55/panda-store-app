@@ -8,13 +8,6 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'customer',
-    loadChildren: () =>
-      import('./pages/customer/customer.module').then(
-        (m) => m.CustomerPageModule
-      ),
-  },
-  {
     path: 'billing',
     loadChildren: () =>
       import('./pages/billing/billing.module').then((m) => m.BillingPageModule),
@@ -38,7 +31,36 @@ const routes: Routes = [
   },
   {
     path: 'about',
-    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
+    loadChildren: () =>
+      import('./pages/about/about.module').then((m) => m.AboutPageModule),
+  },
+  {
+    path: 'customer-detail',
+    loadChildren: () =>
+      import('./pages/customer-detail/customer-detail.module').then(
+        (m) => m.CustomerDetailPageModule
+      ),
+  },
+  {
+    path: 'customers',
+    loadChildren: () =>
+      import('./pages/customers/customers.module').then(
+        (m) => m.CustomersPageModule
+      ),
+  },
+  {
+    path: 'order-detail',
+    loadChildren: () =>
+      import('./pages/order-detail/order-detail.module').then(
+        (m) => m.OrderDetailPageModule
+      ),
+  },
+  {
+    path: 'customer-form',
+    loadChildren: () =>
+      import('./pages/customer-form/customer-form.module').then(
+        (m) => m.CustomerFormPageModule
+      ),
   },
 ];
 

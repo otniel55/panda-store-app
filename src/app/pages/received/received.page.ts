@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 
-import { StorageService } from 'src/app/services/storage.service';
+import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/shared/models/order';
 import { asyncForeach } from 'src/app/shared/utils/arr';
 import { sendWhatsapp } from 'src/app/shared/utils/send-ws';
@@ -16,7 +16,7 @@ export class ReceivedPage implements OnInit {
   orders: Order[] = [];
 
   constructor(
-    private storage: StorageService,
+    private storage: OrderService,
     public actionSheetController: ActionSheetController
   ) {}
 
@@ -65,7 +65,7 @@ export class ReceivedPage implements OnInit {
         },
         {
           text: 'Marcar como entregado',
-          icon: 'checkmark-circle-outline',
+          icon: 'checkmark-done-outline',
           handler: async () => {
             await this.markLikeDelivered(order);
           },

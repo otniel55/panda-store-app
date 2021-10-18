@@ -5,18 +5,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, tap } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { StorageService } from 'src/app/services/storage.service';
 import { uuidv4 } from 'src/app/shared/utils/get-uuid';
 import { sleep } from 'src/app/shared/utils/sleep';
 import { Order } from 'src/app/shared/models/order';
 import { FilesystemService } from 'src/app/services/filesystem.service';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.page.html',
-  styleUrls: ['./customer.page.scss'],
+  selector: 'app-order-detail',
+  templateUrl: './order-detail.page.html',
+  styleUrls: ['./order-detail.page.scss'],
 })
-export class CustomerPage implements OnInit {
+export class OrderDetailPage implements OnInit {
   form: FormGroup;
   id: string;
   test: string;
@@ -24,7 +24,7 @@ export class CustomerPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private storage: StorageService,
+    private storage: OrderService,
     public toastController: ToastController,
     private route: ActivatedRoute,
     private router: Router,
@@ -91,7 +91,7 @@ export class CustomerPage implements OnInit {
     toast2.present();
 
     await sleep(200);
-    this.router.navigate(['/home']);
+    this.router.navigate(['/orders']);
   }
 
   async openChooser() {

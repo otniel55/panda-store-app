@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     { title: 'Ganancia', url: 'metrics', icon: 'pie-chart' },
   ];
   menus = [
-    { title: 'Clientes', url: 'clients', icon: 'people' },
+    { title: 'Clientes', url: 'customers', icon: 'people' },
     { title: 'Acerca de', url: 'about', icon: 'information-circle-outline' },
   ];
 

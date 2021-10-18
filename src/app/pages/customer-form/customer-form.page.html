@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>{{ !id ? 'NUEVO' : 'EDITAR'}} CLIENTE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" class="customer-form">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input clearInput formControlName="name" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input clearInput formControlName="lastname" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ubicación</ion-label>
+      <ion-input clearInput formControlName="location"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input clearInput formControlName="phone" type="tel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sexo</ion-label>
+      <ion-select
+        formControlName="sexo"
+        placeholder="Elija uno"
+        cancelText="CANCELAR"
+        okText="ACEPTAR"
+      >
+        <ion-select-option value="F">Mujer</ion-select-option>
+        <ion-select-option value="M">Hombre</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button class="btn-save" expand="block" (click)="save()"
+      >GUARDAR</ion-button
+    >
+  </form>
+</ion-content>

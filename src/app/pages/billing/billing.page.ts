@@ -3,9 +3,9 @@ import { ActionSheetController, ToastController } from '@ionic/angular';
 import * as moment from 'moment';
 
 import { sleep } from 'src/app/shared/utils/sleep';
-import { StorageService } from 'src/app/services/storage.service';
 import { arraySum, asyncForeach } from 'src/app/shared/utils/arr';
 import { Order } from './../../shared/models/order';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-billing',
@@ -18,7 +18,7 @@ export class BillingPage implements OnInit {
   total = 0;
 
   constructor(
-    private storage: StorageService,
+    private storage: OrderService,
     public toastController: ToastController,
     public actionSheetController: ActionSheetController
   ) {}

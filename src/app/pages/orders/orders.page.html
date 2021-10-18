@@ -1,7 +1,14 @@
 <ion-header>
   <ion-toolbar class="test">
     <ion-title>PEDIDOS</ion-title>
-    <ion-button fill="fab" shape="round" slot="end" class="btn-add-order">
+
+    <ion-button
+      fill="fab"
+      shape="round"
+      slot="end"
+      class="btn-add-order"
+      [routerLink]="['/order-detail']"
+    >
       <ion-icon name="add-circle-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -14,7 +21,7 @@
     </ion-item-divider>
 
     <ion-item
-      [routerLink]="['/customer', item.id]"
+      [routerLink]="['/order-detail', item.id]"
       *ngFor="let item of orders; trackBy: trackByFunc"
       (press)="presentActionSheet(item)"
     >
