@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar class="test">
+    <ion-title>PEDIDOS</ion-title>
+    <ion-button fill="fab" shape="round" slot="end">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-divider>
+      <ion-label> POR FACTURAR </ion-label>
+    </ion-item-divider>
+
+    <ion-item-sliding *ngFor="let item of orders; trackBy: trackByFunc">
+      <ion-item [routerLink]="['/customer', item.id]">
+        <ion-avatar slot="start">
+          <img src="/assets/panda-circle.png" />
+        </ion-avatar>
+
+        <ion-label>
+          <h2>{{item.name | uppercase}}</h2>
+          <h3>Monto: {{ item.soldPrise | currency:'$' }}</h3>
+          <h3>Abono: {{ item.abono | currency:'$' }}</h3>
+          <h3>Resta: {{ item.soldPrise - item.abono | currency:'$' }}</h3>
+          <h3>Fec. Pedido: {{ item.date | date:'dd/MM hh:mm a' }}</h3>
+          <p>{{ item.model }} - {{ item.size }} - {{ item.observations }}</p>
+        </ion-label>
+
+        <ion-button fill="fab" slot="end" (click)="openWs($event, item.phone)">
+          <ion-icon slot="start" name="logo-whatsapp"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="delete(item.id)"
+          >ELIMINAR</ion-item-option
+        >
+        <ion-item-option color="primary" (click)="markLikeBilled(item)"
+          >FACTURAR</ion-item-option
+        >
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item *ngIf="!orders.length" lines="none">
+      <ion-label><p>NO SE ENCONTRARON REGISTROS</p></ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

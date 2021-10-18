@@ -27,12 +27,17 @@ export class MetricsPage implements OnInit {
 
     await asyncForeach(async (key) => {
       const order = await this.storage.get(key);
-      this.orders.push(order);
+
+      if (order.state === 'RB') {
+        this.orders.push(order);
+      }
     }, keys);
 
     const dates = [
       ...new Set(
-        this.orders.map((item) => moment(item.date).format('YYYY-MM'))
+        this.orders.map((item) =>
+          moment(item.deliveredDate).format('YYYY-MM-DD')
+        )
       ),
     ].sort((a, b) =>
       moment(a).diff(moment(b)) < 0 ? 1 : moment(a).diff(moment(b)) > 0 ? -1 : 0
@@ -40,7 +45,7 @@ export class MetricsPage implements OnInit {
 
     this.history = dates.map((date) => {
       const orders = this.orders.filter(
-        (item) => moment(item.date).format('YYYY-MM') === date
+        (item) => moment(item.deliveredDate).format('YYYY-MM-DD') === date
       );
       return {
         date,

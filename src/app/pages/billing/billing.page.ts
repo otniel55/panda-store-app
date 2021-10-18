@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import * as moment from 'moment';
 
 import { sleep } from 'src/app/shared/utils/sleep';
@@ -20,7 +20,8 @@ export class BillingPage implements OnInit {
   constructor(
     private storage: StorageService,
     public toastController: ToastController,
-    private router: Router
+    private router: Router,
+    public actionSheetController: ActionSheetController
   ) {}
 
   ngOnInit() {}
@@ -44,10 +45,68 @@ export class BillingPage implements OnInit {
     return item ? item.id : index;
   }
 
+  async presentActionSheet(order?: Order) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Albums',
+      cssClass: 'my-custom-class',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete clicked');
+          },
+        },
+        {
+          text: 'Share',
+          icon: 'share',
+          handler: () => {
+            console.log('Share clicked');
+          },
+        },
+        {
+          text: 'Play (open modal)',
+          icon: 'caret-forward-circle',
+          handler: () => {
+            console.log('Play clicked');
+          },
+        },
+        {
+          text: 'Favorite',
+          icon: 'heart',
+          handler: () => {
+            console.log('Favorite clicked');
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  }
+
   delete(id: string) {
     this.orders = this.orders.filter((item) => item.id !== id);
     this.total = arraySum(this.orders.map((item) => item.buyedPrice));
   }
+
+  // async markLikePending(order) {
+  //   order.state = 'PD';
+  //   await this.storage.set(order.id, order);
+  //   const curentOrder = this.customers.find((item) => item.id === order.id);
+  //   curentOrder.state = 'PD';
+  //   this.setLists();
+  // }
 
   async save() {
     await new Promise((resolve) =>
@@ -70,6 +129,6 @@ export class BillingPage implements OnInit {
     toast2.present();
 
     await sleep(200);
-    this.router.navigate(['/home']);
+    this.router.navigate(['/orders']);
   }
 }

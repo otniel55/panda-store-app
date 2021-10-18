@@ -4,13 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'orders',
     pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    loadChildren: () =>
-      import('./pages/home/home.module').then((m) => m.HomePageModule),
   },
   {
     path: 'customer',
@@ -21,11 +16,25 @@ const routes: Routes = [
   },
   {
     path: 'billing',
-    loadChildren: () => import('./pages/billing/billing.module').then( m => m.BillingPageModule)
+    loadChildren: () =>
+      import('./pages/billing/billing.module').then((m) => m.BillingPageModule),
   },
   {
     path: 'metrics',
-    loadChildren: () => import('./pages/metrics/metrics.module').then( m => m.MetricsPageModule)
+    loadChildren: () =>
+      import('./pages/metrics/metrics.module').then((m) => m.MetricsPageModule),
+  },
+  {
+    path: 'orders',
+    loadChildren: () =>
+      import('./pages/orders/orders.module').then((m) => m.OrdersPageModule),
+  },
+  {
+    path: 'received',
+    loadChildren: () =>
+      import('./pages/received/received.module').then(
+        (m) => m.ReceivedPageModule
+      ),
   },
 ];
 

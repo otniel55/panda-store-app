@@ -11,9 +11,9 @@ import { AlertController } from '@ionic/angular';
 })
 export class AppComponent implements OnInit {
   public appPages = [
-    { title: 'Inicio', url: 'home', icon: 'home' },
-    { title: 'Pedido', url: 'customer', icon: 'bag-check' },
-    { title: 'Fac.', url: 'billing', icon: 'cash' },
+    { title: 'Pedidos', url: 'orders', icon: 'bag-check' },
+    { title: 'Facturados', url: 'billing', icon: 'cash' },
+    { title: 'Recibidos', url: 'received', icon: 'archive-outline' },
     { title: 'Ganancia', url: 'metrics', icon: 'pie-chart' },
   ];
 

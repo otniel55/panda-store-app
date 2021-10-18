@@ -22,7 +22,7 @@
         <ng-container *ngFor="let item of history; trackBy: trackByFunc">
           <ion-item-divider>
             <ion-label>
-              {{ item.date | date:'MMMM yyyy' | uppercase }}
+              {{ item.date | date:'dd MMMM yyyy' | uppercase }}
             </ion-label>
           </ion-item-divider>
 

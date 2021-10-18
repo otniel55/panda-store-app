@@ -19,6 +19,7 @@ import { FilesystemService } from 'src/app/services/filesystem.service';
 export class CustomerPage implements OnInit {
   form: FormGroup;
   id: string;
+  test: string;
   order: Order;
 
   constructor(
@@ -94,6 +95,6 @@ export class CustomerPage implements OnInit {
   }
 
   async openChooser() {
-    console.log(await this.fs.openFile());
+    this.test = await this.fs.openFile();
   }
 }
